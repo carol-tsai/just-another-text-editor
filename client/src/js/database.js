@@ -18,7 +18,7 @@ export const putDb = async (content) => {
   const todosDb = await openDB('jate', 1);
   const tx = todosDb.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
-  const request = store.put({ content });
+  const request = store.put({ jate: content });
   const result = await request;
   console.log('🚀 - data saved to the database', result);
 }
