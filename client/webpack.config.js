@@ -20,11 +20,11 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './index.html',
-        title: 'Webpack Plugin',
+        title: 'JATE',
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
-        swDest: 'service-worker.js',
+        swDest: 'src-sw.js',
       }), 
       new WebpackPwaManifest({
         name: 'My Text Editor Web App',
@@ -35,6 +35,7 @@ module.exports = () => {
         publicPath: '/',
         fingerprints: false,
         inject: true,
+        id: '/client/dist/',
         icons: [
           {
             src: path.resolve('./src/images/logo.png'),
