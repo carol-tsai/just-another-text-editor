@@ -22,9 +22,8 @@ module.exports = () => {
         template: './index.html',
         title: 'Webpack Plugin',
       }),
-      new MiniCssExtractPlugin(),
       new InjectManifest({
-        swSrc: './src/sw.js',
+        swSrc: './src-sw.js',
         swDest: 'service-worker.js',
       }), 
       new WebpackPwaManifest({
@@ -32,11 +31,15 @@ module.exports = () => {
         short_name: 'TextEdit',
         description: 'My awesome text editor!',
         background_color: '#ffffff',
+        start_url: '/',
+        publicPath: '/',
         fingerprints: false,
+        inject: true,
         icons: [
           {
             src: path.resolve('./src/images/logo.png'),
-            sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+            sizes: [96, 128, 192, 256, 384, 512], // multiple sizes
+            destination: path.join('assets', 'icons'),
           },
         ]
       }),
@@ -46,7 +49,7 @@ module.exports = () => {
       rules: [
         {
           test: /\.css$/i,
-          use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          use: ['style-loader', 'css-loader'],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
@@ -59,6 +62,7 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
         },
